@@ -1,7 +1,11 @@
+# MacOS
+.DS_Store
+
 # Prerequisites
 *.d
 
 # Compiled Object files
+/build
 *.slo
 *.lo
 *.o
@@ -30,3 +34,8 @@
 *.exe
 *.out
 *.app
+
+# Vscode
+.vscode/
+CMakePresets.json
+
