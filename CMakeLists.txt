@@ -8,4 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_library(${PROJECT_NAME} INTERFACE)
 
 # Expose the include directory
-target_include_directories(${PROJECT_NAME} INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(
+    ${PROJECT_NAME} INTERFACE
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/asio-1.30.2/include"
+    )
