@@ -1,17 +1,11 @@
 cmake_minimum_required(VERSION 3.31)
-project(qlexEngine VERSION 0.1.0 LANGUAGES CXX)
+project(qlexNet VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Var
-set(EXTERN_DIR "${CMAKE_SOURCE_DIR}/extern")
-set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
+# Define an INTERFACE library (header-only)
+add_library(${PROJECT_NAME} INTERFACE)
 
-# Include headers
-include_directories(${LIB_DIR})
-
-# Add Asio header directory
-include_directories(${EXTERN_DIR}/asio-1.30.2/include)
-
-add_executable(${PROJECT_NAME} "main.cpp")
+# Expose the include directory
+target_include_directories(${PROJECT_NAME} INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include")
