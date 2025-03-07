@@ -56,8 +56,8 @@ namespace qlexnet
                     {
                         std::cout << "[SERVER] New Connection: " << socket.remote_endpoint() << std::endl;
 
-                        std::shared_ptr<connection<T>> newconn =
-                            std::make_shared<connection<T>>(connection<T>::owner::server,
+                        std::shared_ptr<Connection<T>> newconn =
+                            std::make_shared<Connection<T>>(Connection<T>::owner::server,
                                                             _asioContext, std::move(socket), _rxQueue);
 
                         if (onClientConnect(newconn))
@@ -80,7 +80,7 @@ namespace qlexnet
                 });
         }
 
-        void messageClient(std::shared_ptr<connection<T>> client_, const Message<T> &msg_)
+        void messageClient(std::shared_ptr<Connection<T>> client_, const Message<T> &msg_)
         {
             if (client_ && client_->isConnected())
             {
@@ -95,7 +95,7 @@ namespace qlexnet
             }
         }
 
-        void messageAllClients(const Message<T> &msg_, std::shared_ptr<connection<T>> pIgnoreClient_ = nullptr)
+        void messageAllClients(const Message<T> &msg_, std::shared_ptr<Connection<T>> pIgnoreClient_ = nullptr)
         {
             bool invalidClientExists = false;
 
@@ -137,9 +137,9 @@ namespace qlexnet
         }
 
     protected:
-        virtual bool onClientConnect(std::shared_ptr<connection<T>> client_) { return false; }
-        virtual void onClientDisconnect(std::shared_ptr<connection<T>> client_) {}
-        virtual void onMessage(std::shared_ptr<connection<T>> client_, Message<T> &msg_) {}
+        virtual bool onClientConnect(std::shared_ptr<Connection<T>> client_) { return false; }
+        virtual void onClientDisconnect(std::shared_ptr<Connection<T>> client_) {}
+        virtual void onMessage(std::shared_ptr<Connection<T>> client_, Message<T> &msg_) {}
 
     protected:
         XQueue<OwnedMessage<T>> _rxQueue;

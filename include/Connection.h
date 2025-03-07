@@ -9,7 +9,7 @@
 namespace qlexnet
 {
     template <typename T>
-    class connection : public std::enable_shared_from_this<connection<T>>
+    class Connection : public std::enable_shared_from_this<Connection<T>>
     {
     public:
         enum class owner
@@ -19,13 +19,13 @@ namespace qlexnet
         };
 
     public:
-        connection(owner parent_, asio::io_context &asioContext_, asio::ip::tcp::socket socket_, XQueue<OwnedMessage<T>> &rxQueue_)
+        Connection(owner parent_, asio::io_context &asioContext_, asio::ip::tcp::socket socket_, XQueue<OwnedMessage<T>> &rxQueue_)
             : _asioContext(asioContext_), _socket(std::move(socket_)), _rxQueue(rxQueue_)
         {
             _ownerType = parent_;
         }
 
-        virtual ~connection() {}
+        virtual ~Connection() {}
 
         uint32_t GetID() const { return _id; }
 
@@ -192,8 +192,8 @@ namespace qlexnet
     protected:
         asio::ip::tcp::socket _socket;
         asio::io_context &_asioContext;
-        XQueue<Message<T>> _rxQueue;
-        XQueue<OwnedMessage<T>> &_txQueue;
+        XQueue<Message<T>> _txQueue;
+        XQueue<OwnedMessage<T>> &_rxQueue;
         Message<T> _msgRxTmp;
         owner _ownerType = owner::server;
         uint32_t _id = 0;
