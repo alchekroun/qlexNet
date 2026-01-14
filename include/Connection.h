@@ -156,7 +156,7 @@ namespace qlexnet
                                  }
                                  else
                                  {
-                                     std::cout << "[" << _id << "] Read Header Fail.\n";
+                                     std::cout << "[" << _id << "] Read Header Fail. " << ec_ << " \n";
                                      _socket.close();
                                  }
                              });

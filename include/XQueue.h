@@ -87,6 +87,14 @@ namespace qlexnet
             }
         }
 
+        void wait_for(std::chrono::milliseconds timeout)
+        {
+            std::unique_lock<std::mutex> ul(muxBlocking);
+            cvBlocking.wait_for(ul, timeout, [this](){
+                return !empty();
+            });
+        }
+
     protected:
         std::mutex muxQueue;
         std::deque<T> deqQueue;

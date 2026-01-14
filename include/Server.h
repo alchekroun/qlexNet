@@ -95,6 +95,19 @@ namespace qlexnet
             }
         }
 
+        void messageClient(uint32_t id_, const Message<T>& msg_)
+        {
+            std::shared_ptr<Connection<T>> client;
+            for (const auto& c : _connections) {
+                if (c->GetID() == id_) {
+                    client = c;
+                }
+            }
+            if (client == nullptr) return;
+
+            messageClient(client, msg_);
+        }
+
         void messageAllClients(const Message<T> &msg_, std::shared_ptr<Connection<T>> pIgnoreClient_ = nullptr)
         {
             bool invalidClientExists = false;
@@ -120,10 +133,10 @@ namespace qlexnet
                     std::remove(_connections.begin(), _connections.end(), nullptr), _connections.end());
         }
 
-        virtual void update(size_t maxMessages_ = -1, bool wait_ = false)
+        virtual void update(size_t maxMessages_ = -1, bool wait_ = false, std::chrono::milliseconds timeout = std::chrono::milliseconds(500))
         {
             if (wait_)
-                _rxQueue.wait();
+                _rxQueue.wait_for(timeout);
 
             size_t msgCount = 0;
             while (msgCount < maxMessages_ && !_rxQueue.empty())
@@ -143,7 +156,7 @@ namespace qlexnet
 
     protected:
         XQueue<OwnedMessage<T>> _rxQueue;
-        std::deque<std::shared_ptr<Connection<T>>> _connections;
+        std::vector<std::shared_ptr<Connection<T>>> _connections;
         asio::io_context _asioContext;
         std::thread _threadContext;
 
