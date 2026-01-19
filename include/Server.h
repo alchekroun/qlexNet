@@ -1,10 +1,11 @@
 #pragma once
 
+#include <iostream>
+#include <memory>
+
 #include "Message.h"
 #include "XQueue.h"
 #include "Connection.h"
-
-#include <memory>
 
 namespace qlexnet
 {

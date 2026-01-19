@@ -1,10 +1,12 @@
 #pragma once
 
+#include <asio.hpp>
+#include <asio/ts/buffer.hpp>
+#include <ostream>
+
 #include "Message.h"
 #include "XQueue.h"
 
-#include <asio.hpp>
-#include <asio/ts/buffer.hpp>
 
 namespace qlexnet
 {

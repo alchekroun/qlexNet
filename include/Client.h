@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+
 #include "Message.h"
 #include "XQueue.h"
 #include "Connection.h"
